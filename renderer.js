@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
       let sizes = ["small", "medium", "large"];
       sizes.forEach((size, i) => {
         document.getElementById(`${size}WidthPercentage`).value =
-          settings.resizeWindow.windowSizePercentages[i].width * 100;
+          settings.resizeWindow.windowSizePercentages[i].width;
         document.getElementById(`${size}HeightPercentage`).value =
-          settings.resizeWindow.windowSizePercentages[i].height * 100;
+          settings.resizeWindow.windowSizePercentages[i].height;
       });
     }
   });
@@ -111,12 +111,12 @@ async function saveResizeSettings(event) {
   const resizeKeybind = document.getElementById("resizeKeybind").value;
 
   // Get percentage values from slider values (assuming 0-100 range)
-  const smallWidthPercentage = document.getElementById("smallWidthPercentage").value / 100;
-  const smallHeightPercentage = document.getElementById("smallHeightPercentage").value / 100;
-  const mediumWidthPercentage = document.getElementById("mediumWidthPercentage").value / 100;
-  const mediumHeightPercentage = document.getElementById("mediumHeightPercentage").value / 100;
-  const largeWidthPercentage = document.getElementById("largeWidthPercentage").value / 100;
-  const largeHeightPercentage = document.getElementById("largeHeightPercentage").value / 100;
+  const smallWidthPercentage = document.getElementById("smallWidthPercentage").value;
+  const smallHeightPercentage = document.getElementById("smallHeightPercentage").value;
+  const mediumWidthPercentage = document.getElementById("mediumWidthPercentage").value;
+  const mediumHeightPercentage = document.getElementById("mediumHeightPercentage").value;
+  const largeWidthPercentage = document.getElementById("largeWidthPercentage").value;
+  const largeHeightPercentage = document.getElementById("largeHeightPercentage").value;
 
   const data = {
     resizeKeybind,
