@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Window Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="innerContainer">
+      <h1>Window Snapper & Resizer</h1>
+      <div class="nav">
+        <div class="tab">
+          <button class="tablinks active" onclick="openTab(event, 'center')">Center Window</button>
+          <button class="tablinks" onclick="openTab(event, 'resize')">Resize Window</button>
+        </div>
+        <button id="resetButton" onclick="resetSettings()">Reset</button>
+      </div>
+
+      <div id="center" class="tabcontent active">
+        <h3>Center Window</h3>
+        <form onsubmit="saveCenterSettings(event)">
+          <div>
+            <label class="keybindLabel" for="centerKeybind">Keybind:</label>
+            <input type="text" required class="keybinding-input" id="centerKeybind"
+              placeholder="Enter Shortcut (e.g., Win+Shift+C)">
+            <span class="input-help">Press Esc to reset</span>
+          </div>
+          <button class="saveButton" type="submit">Save</button>
+        </form>
+      </div>
+      <div id="resize" class="tabcontent">
+        <h3>Resize Window</h3>
+        <form onsubmit="saveResizeSettings(event)">
+          <div>
+            <label class="keybindLabel" for="resizeKeybind">Keybind:</label>
+            <input type="text" required class="keybinding-input" id="resizeKeybind"
+              placeholder="Enter Shortcut (e.g., F9)">
+            <span class="input-help">Press Esc to reset</span>
+
+          </div>
+          <div>
+            <h4>Small Size</h4>
+            <label for="smallWidthPercentage">Width Percentage:</label>
+            <input type="range" id="smallWidthPercentage" min="1" max="100" value="50">
+            <label for="smallHeightPercentage">Height Percentage:</label>
+            <input type="range" id="smallHeightPercentage" min="1" max="100" value="50">
+          </div>
+          <div>
+            <h4>Medium Size</h4>
+            <label for="mediumWidthPercentage">Width Percentage:</label>
+            <input type="range" id="mediumWidthPercentage" min="1" max="100" value="75">
+            <label for="mediumHeightPercentage">Height Percentage:</label>
+            <input type="range" id="mediumHeightPercentage" min="1" max="100" value="75">
+          </div>
+          <div>
+            <h4>Large Size</h4>
+            <label for="largeWidthPercentage">Width Percentage:</label>
+            <input type="range" id="largeWidthPercentage" min="1" max="100" value="90">
+            <label for="largeHeightPercentage">Height Percentage:</label>
+            <input type="range" id="largeHeightPercentage" min="1" max="100" value="90">
+          </div>
+          <button class="saveButton" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>

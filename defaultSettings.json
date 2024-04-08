@@ -1,0 +1,13 @@
+{
+  "centerWindow": {
+    "keybinding": "Control + Shift + C"
+  },
+  "resizeWindow": {
+    "keybinding": "F9",
+    "windowSizePercentages": [
+      { "width": 0.5, "height": 0.5 },
+      { "width": 0.75, "height": 0.75 },
+      { "width": 0.9, "height": 0.9 }
+    ]
+  }
+}
