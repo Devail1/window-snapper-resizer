@@ -8,7 +8,7 @@ let mainWindow;
 let tray;
 let autohotkeyProcess;
 
-const autohotkeyPath = path.join(__dirname, "./scripts/AutoHotkey32.exe");
+const autohotkeyPath = path.join(__dirname, "./autohotkey/AutoHotkey32.exe");
 const scriptPath = path.join(__dirname, "./scripts/center-window-resize.ahk");
 const settingsPath = path.join(app.getAppPath(), "settings.json");
 
@@ -58,9 +58,8 @@ function createTray() {
 app.whenReady().then(() => {
   createWindow();
   createTray();
-  autohotkeyProcess = spawn(autohotkeyPath, [scriptPath]);
 
-  // autohotkeyProcess = spawn("./scripts/AutoHotkey32.exe ./scripts/center-window-resize.ahk");
+  autohotkeyProcess = spawn(autohotkeyPath, [scriptPath]);
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
