@@ -8,8 +8,8 @@ let mainWindow;
 let tray;
 let autohotkeyProcess;
 
-const autohotkeyPath = path.join(__dirname, "./autohotkey/AutoHotkey32.exe");
-const scriptPath = path.join(__dirname, "./scripts/center-window-resize.ahk");
+const autohotkeyPath = path.join(__dirname, "./assets/autohotkey/AutoHotkey32.exe");
+const scriptPath = path.join(__dirname, "./assets/scripts/center-window-resize.ahk");
 const settingsPath = path.join(app.getAppPath(), "settings.json");
 
 function createWindow() {
