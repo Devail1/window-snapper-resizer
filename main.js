@@ -1,10 +1,14 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
-const { unregisterShortcuts, registerShortcuts } = require("./shortcutManager");
+const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const defaultSettings = require("./defaultSettings.json");
+
 let mainWindow;
 let tray;
+let autohotkeyProcess;
+
+const settingsPath = path.join(app.getAppPath(), "settings.json");
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -53,21 +57,19 @@ app.whenReady().then(() => {
   createWindow();
   createTray();
 
+  autohotkeyProcess = spawn("./scripts/center-window-resize.exe");
+
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
 function resetSettings(event) {
-  unregisterShortcuts();
-  const settingsPath = path.join(app.getPath("userData"), "settings.json");
-  console.log("settingsPath", settingsPath);
   fs.writeFileSync(settingsPath, JSON.stringify(defaultSettings));
 
   event.sender.send("load-settings-reply", {
     settings: defaultSettings,
   });
-  registerShortcuts(JSON.stringify(defaultSettings));
 }
 
 ipcMain.on("reset-settings", (event) => {
@@ -75,8 +77,6 @@ ipcMain.on("reset-settings", (event) => {
 });
 
 ipcMain.on("load-settings", (event) => {
-  const settingsPath = path.join(app.getPath("userData"), "settings.json");
-
   if (!fs.existsSync(settingsPath)) {
     resetSettings(event);
   } else {
@@ -88,33 +88,26 @@ ipcMain.on("load-settings", (event) => {
         settings: JSON.parse(settings),
       });
     }
-    registerShortcuts(settings);
   }
 });
 
 ipcMain.on("save-center-settings", async (event, data) => {
-  unregisterShortcuts();
   try {
-    const settingsPath = path.join(app.getPath("userData"), "settings.json");
     const rawSettings = await fs.promises.readFile(settingsPath, "utf8");
     const settings = JSON.parse(rawSettings);
 
     settings.centerWindow.keybinding = data.centerKeybind;
 
     await fs.promises.writeFile(settingsPath, JSON.stringify(settings)); // Indent for readability
-
-    registerShortcuts(JSON.stringify(settings));
+    await reloadChildProcess(); // Reload after saving
   } catch (err) {
     console.error("Error saving settings:", err.message, err.stack);
     // Optionally notify user of error (e.g., using a dialog)
   }
 });
 
-ipcMain.on("save-resize-settings", (event, data) => {
-  unregisterShortcuts();
-
+ipcMain.on("save-resize-settings", async (event, data) => {
   try {
-    const settingsPath = path.join(app.getPath("userData"), "settings.json");
     const rawSettings = fs.readFileSync(settingsPath, "utf8");
     const settings = JSON.parse(rawSettings); // Parse only once
 
@@ -124,8 +117,8 @@ ipcMain.on("save-resize-settings", (event, data) => {
       windowSizePercentages: data.windowSizePercentages,
     };
 
-    fs.writeFileSync(settingsPath, JSON.stringify(settings));
-    registerShortcuts(JSON.stringify(settings));
+    await fs.promises.writeFile(settingsPath, JSON.stringify(settings)); // Indent for readability
+    await reloadChildProcess(); // Reload after saving
   } catch (err) {
     console.error("Error saving settings:", err.message, err.stack); // Include stack trace
     console.error("Settings object:", settings);
@@ -152,5 +145,24 @@ app.on("window-all-closed", function () {
 });
 
 app.on("will-quit", () => {
-  unregisterShortcuts();
+  watcher.close();
+  if (autohotkeyProcess) {
+    autohotkeyProcess.kill();
+  }
 });
+
+const watcher = fs.watch(settingsPath, () => {
+  reloadChildProcess();
+});
+
+function reloadChildProcess() {
+  if (autohotkeyProcess) {
+    try {
+      autohotkeyProcess.kill();
+    } catch (error) {
+      console.error("Error killing child process:", error);
+    }
+  }
+
+  autohotkeyProcess = spawn("./scripts/center-window-resize.exe");
+}
