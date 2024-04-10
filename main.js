@@ -11,7 +11,7 @@ let autohotkeyProcess;
 const resourcesPath = path.join(process.cwd(), "/resources");
 const autohotkeyPath = path.join(resourcesPath, "/autohotkey/AutoHotkey32.exe");
 const scriptPath = path.join(resourcesPath, "/autohotkey/center-window-resize.ahk");
-const settingsPath = path.join(app.getPath("userData"), "/autohotkey/settings.json");
+const settingsPath = path.join(app.getPath("userData"), "/settings.json");
 
 // Function to create the main window
 function createWindow() {
