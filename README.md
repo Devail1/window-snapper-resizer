@@ -1,40 +1,31 @@
-# electron-quick-start
+# Window Snapper & Resizer
 
-**Clone and run for a quick way to see Electron in action.**
+Window Snapper & Resizer is a utility application that allows you to easily center and resize windows on your desktop using customizable keyboard shortcuts.
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/latest/tutorial/quick-start) within the Electron documentation.
+## Features
 
-A basic Electron application needs just these files:
+- **Center Window**: Quickly center the active window on your screen.
+- **Resize Window**: Resize the active window to predefined sizes (small, medium, large) with customizable keyboard shortcuts.
+- **Customizable Keybinds**: Easily configure your preferred key combinations for centering and resizing windows.
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-- `preload.js` - A content script that runs before the renderer process loads.
+## Inspiration
 
-You can learn more about each of these components in depth within the [Tutorial](https://electronjs.org/docs/latest/tutorial/tutorial-prerequisites).
+This project is heavily inspired by the window centering helper freeware by [Kamil Szymborski](https://www.szymborski.net/software/). We aim to provide a modern, user-friendly alternative with additional features and customization options.
 
-## To Use
+## Installation
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To use Window Snapper & Resizer, download the latest release from the [GitHub repository](https://github.com/devail1/window-snapper-resizer) and run the executable file. Follow the on-screen instructions to complete the installation process.
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
-```
+## Usage
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+1. **Center Window**: Press the specified key combination to center the active window.
+2. **Resize Window**: Press the specified key combination to resize the active window to small, medium, or large sizes.
+3. **Customization**: Edit the `settings.json` file to customize keybinds and window sizes.
 
-## Resources for Learning Electron
+## Contributing
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [Electron Fiddle](https://electronjs.org/fiddle) - Electron Fiddle, an app to test small Electron experiments
+Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the GitHub repository or submit a pull request.
 
 ## License
 
-[CC0 1.0 (Public Domain)](LICENSE.md)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
