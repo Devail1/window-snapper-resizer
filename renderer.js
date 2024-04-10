@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
       sizes.forEach((size, i) => {
         document.getElementById(`${size}WidthPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].width;
-        document.getElementById(`${size}WidthPercentage-value`).textContent =
+        document.getElementById(`${size}WidthPercentage-value`).value =
           settings.resizeWindow.windowSizePercentages[i].width;
 
         document.getElementById(`${size}HeightPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].height;
-        document.getElementById(`${size}HeightPercentage-value`).textContent =
+        document.getElementById(`${size}HeightPercentage-value`).value =
           settings.resizeWindow.windowSizePercentages[i].height;
       });
     }

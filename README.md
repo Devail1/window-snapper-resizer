@@ -24,11 +24,10 @@ To use Window Snapper & Resizer, download the latest release from the [GitHub re
 
 ## Backlog
 
-- **Decoupling Toggle**: Allow decoupling the toggle for label sizes, enabling independent control of width and height.
 - **Label Sizes**: Provide an option to rename, add, or remove sizes for more flexibility in window resizing.
-- **Improved Settings UI**: Enhance the user interface for settings to make it more intuitive and user-friendly.
 - **Feature Enable/Disable**: Add the ability to enable or disable every feature in the app, such as centering and resizing.
 - **Decouple Centering and Resizing**: Allow decoupling centering and resizing, providing separate controls for each feature.
+- **Improved Settings UI**: Enhance the user interface for settings to make it more intuitive and user-friendly.
 
 ## Contributing
 
