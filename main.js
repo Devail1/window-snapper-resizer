@@ -16,8 +16,8 @@ const settingsPath = path.join(app.getPath("userData"), "/settings.json");
 // Function to create the main window
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 500,
-    height: 680,
+    width: 580,
+    height: 760,
     icon: path.join(resourcesPath, "icons", "icon.png"),
     autoHideMenuBar: true,
     webPreferences: {

@@ -22,6 +22,14 @@ To use Window Snapper & Resizer, download the latest release from the [GitHub re
 2. **Resize Window**: Press the specified key combination to resize the active window to small, medium, or large sizes.
 3. **Customization**: Edit the `settings.json` file to customize keybinds and window sizes.
 
+## Backlog
+
+- **Decoupling Toggle**: Allow decoupling the toggle for label sizes, enabling independent control of width and height.
+- **Label Sizes**: Provide an option to rename, add, or remove sizes for more flexibility in window resizing.
+- **Improved Settings UI**: Enhance the user interface for settings to make it more intuitive and user-friendly.
+- **Feature Enable/Disable**: Add the ability to enable or disable every feature in the app, such as centering and resizing.
+- **Decouple Centering and Resizing**: Allow decoupling centering and resizing, providing separate controls for each feature.
+
 ## Contributing
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the GitHub repository or submit a pull request.

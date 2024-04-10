@@ -158,6 +158,35 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%; /* Circular thumb */
 }
 
+.window-snapper-resizer {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Style the summary to make it look like a button */
+summary {
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  font-size: x-small;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Style the content inside the details */
+.read-more-content {
+  font-size: smaller;
+  padding: 1rem;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  background-color: #f9f9f9;
+  bottom: 0;
+  font-size: x-small;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
 footer {
   background-color: #333;
   text-align: center;
