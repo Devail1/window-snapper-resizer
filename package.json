@@ -32,6 +32,7 @@
     "files": [
       "**/*",
       "!**/node_modules/**",
+      "!**/portable/**",
       "!**/.git/**",
       "!package*.json"
     ],
