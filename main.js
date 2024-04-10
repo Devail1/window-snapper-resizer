@@ -8,10 +8,10 @@ let mainWindow;
 let tray;
 let autohotkeyProcess;
 
-const resourcesPath = path.join(process.cwd(), "/resources/autohotkey");
-const autohotkeyPath = path.join(resourcesPath, "/AutoHotkey32.exe");
-const scriptPath = path.join(resourcesPath, "/center-window-resize.ahk");
-const settingsPath = path.join(app.getPath("userData"), "/settings.json");
+const resourcesPath = path.join(process.cwd(), "/resources");
+const autohotkeyPath = path.join(resourcesPath, "/autohotkey/AutoHotkey32.exe");
+const scriptPath = path.join(resourcesPath, "/autohotkey/center-window-resize.ahk");
+const settingsPath = path.join(app.getPath("userData"), "/autohotkey/settings.json");
 
 // Function to create the main window
 function createWindow() {
