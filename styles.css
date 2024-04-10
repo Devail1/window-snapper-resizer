@@ -161,6 +161,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin: 0;
 }
 .range-input-value {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -178,7 +179,8 @@ input[type="range"]::-webkit-slider-thumb {
 
 .input-value-wrapper {
   font-size: 12px;
-  padding: 4px 6px;
+  padding: 4px;
+  padding-bottom: 3px;
   width: 24px;
   border: 1px solid #ccc;
   border-radius: 4px;
