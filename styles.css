@@ -4,7 +4,7 @@
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .innerContainer {
@@ -48,11 +48,6 @@ span {
 
 label {
   font-size: 14px;
-}
-
-.dimensions-value {
-  margin-left: 5px;
-  display: inline;
 }
 
 .dimensions-label {
@@ -140,7 +135,7 @@ button:hover {
 }
 
 input[type="range"] {
-  max-width: calc(100% - 140px);
+  max-width: calc(100% - 180px);
   -webkit-appearance: none; /* Remove default appearance */
   appearance: none;
   width: 100%; /* Adjust width as needed */
@@ -157,6 +152,43 @@ input[type="range"]::-webkit-slider-thumb {
   height: 16px; /* Adjust thumb height */
   background: #007bff; /* Thumb background color */
   border-radius: 50%; /* Circular thumb */
+}
+
+/* CSS to remove number input arrows */
+.range-input-value::-webkit-inner-spin-button,
+.range-input-value::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.range-input-value {
+  -moz-appearance: textfield;
+}
+
+.range-input-value {
+  display: inline;
+  color: darkslategray;
+  width: 14px;
+  margin: 6px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.input-value-wrapper {
+  font-size: 12px;
+  padding: 4px 6px;
+  width: 24px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-value-wrapper input {
+  border-radius: 4px;
+  border: none;
+  padding: 0px;
+  outline: none;
 }
 
 .window-snapper-resizer {
@@ -184,13 +216,12 @@ summary {
 
 /* Style the content inside the details */
 .read-more-content {
-  font-size: smaller;
+  font-size: 11px;
   padding: 8px 4px;
   border-top: none;
   border-radius: 0 0 5px 5px;
   background-color: #f9f9f9;
   bottom: 0;
-  font-size: 11px;
   width: 90%;
   margin: 0 auto;
   max-width: 600px;

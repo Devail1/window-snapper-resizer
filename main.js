@@ -17,7 +17,7 @@ const settingsPath = path.join(app.getPath("userData"), "/settings.json");
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 580,
-    height: 760,
+    height: 730,
     icon: path.join(resourcesPath, "icons", "icon.png"),
     autoHideMenuBar: true,
     webPreferences: {

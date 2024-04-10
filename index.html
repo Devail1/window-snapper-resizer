@@ -46,31 +46,49 @@
             <h4>Small Size</h4>
             <label for="smallWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="smallWidthPercentage" min="1" max="100" value="50">
-            <span id="smallWidthPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="smallWidthPercentage-value" min="1" max="100"
+                value="50">%
+            </span>
             <br>
             <label for="smallHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="smallHeightPercentage" min="1" max="100" value="50">
-            <span id="smallHeightPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="smallHeightPercentage-value" min="1" max="100"
+                value="50">%
+            </span>
           </div>
           <div>
             <h4>Medium Size</h4>
             <label for="mediumWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="mediumWidthPercentage" min="1" max="100" value="75">
-            <span id="mediumWidthPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="mediumWidthPercentage-value" min="1" max="100"
+                value="75">%
+            </span>
             <br>
             <label for="mediumHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="mediumHeightPercentage" min="1" max="100" value="75">
-            <span id="mediumHeightPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="mediumHeightPercentage-value" min="1" max="100"
+                value="75">%
+            </span>
           </div>
           <div>
             <h4>Large Size</h4>
             <label for="largeWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="largeWidthPercentage" min="1" max="100" value="90">
-            <span id="largeWidthPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="largeWidthPercentage-value" min="1" max="100"
+                value="90">%
+            </span>
             <br>
             <label for="largeHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="largeHeightPercentage" min="1" max="100" value="90">
-            <span id="largeHeightPercentage-value" class="dimensions-value" /></span>
+            <span class="input-value-wrapper">
+              <input type="number" class="range-input-value" id="largeHeightPercentage-value" min="1" max="100"
+                value="90">%
+            </span>
           </div>
           <button class="save-button" type="submit">Save</button>
         </form>
@@ -130,6 +148,22 @@
         currentKeybindingInput = null;
       }
     }
+
+    document.querySelectorAll(".range-input-value").forEach((input) => {
+      const rangeId = input.id.replace("-value", "");
+      const rangeInput = document.getElementById(rangeId);
+
+      if (rangeInput) {
+        input.addEventListener("change", (event) => {
+          rangeInput.value = event.target.value;
+        });
+
+        rangeInput.addEventListener("input", (event) => {
+          input.value = event.target.value;
+        });
+      }
+    });
+
     document.querySelectorAll(".keybinding-input").forEach((input) => {
       input.addEventListener("focus", () => {
         bindKeybindingInput(input);

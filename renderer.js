@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(`${size}WidthPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].width;
         document.getElementById(`${size}WidthPercentage-value`).textContent =
-          settings.resizeWindow.windowSizePercentages[i].width + "%";
+          settings.resizeWindow.windowSizePercentages[i].width;
 
         document.getElementById(`${size}HeightPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].height;
         document.getElementById(`${size}HeightPercentage-value`).textContent =
-          settings.resizeWindow.windowSizePercentages[i].height + "%";
+          settings.resizeWindow.windowSizePercentages[i].height;
       });
     }
   });
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('input[type="range"]').forEach((input) => {
     input.addEventListener("input", () => {
       const spanId = input.id + "-value";
-      document.getElementById(spanId).textContent = input.value + "%";
+      document.getElementById(spanId).textContent = input.value;
     });
   });
 });
