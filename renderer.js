@@ -1,5 +1,4 @@
 const { ipcRenderer } = require("electron");
-const hotkeys = require("hotkeys-js");
 
 document.addEventListener("DOMContentLoaded", () => {
   // Load settings
@@ -15,71 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
       sizes.forEach((size, i) => {
         document.getElementById(`${size}WidthPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].width;
+        document.getElementById(`${size}WidthPercentage-value`).textContent =
+          settings.resizeWindow.windowSizePercentages[i].width + "%";
+
         document.getElementById(`${size}HeightPercentage`).value =
           settings.resizeWindow.windowSizePercentages[i].height;
+        document.getElementById(`${size}HeightPercentage-value`).textContent =
+          settings.resizeWindow.windowSizePercentages[i].height + "%";
       });
     }
   });
 
-  let currentKeybindingInput = null;
-  let keyCombinations = []; // Array to store key combinations
-
-  function bindKeybindingInput(input) {
-    currentKeybindingInput = input;
-    keyCombinations = []; // Reset key combinations on focus
-    hotkeys.setScope("keybinding-input");
-    hotkeys("esc", "keybinding-input", function (event, handler) {
-      input.value = "";
-      keyCombinations = [];
-      hotkeys.deleteScope("keybinding-input");
-      currentKeybindingInput = null;
-    });
-  }
-
-  function unbindKeybindingInput() {
-    if (currentKeybindingInput) {
-      hotkeys.deleteScope("keybinding-input");
-      currentKeybindingInput = null;
-    }
-  }
-
-  document.querySelectorAll(".keybinding-input").forEach((input) => {
-    input.addEventListener("focus", () => {
-      bindKeybindingInput(input);
-    });
-
-    input.addEventListener("blur", () => {
-      unbindKeybindingInput();
-      // Update input field value only if there are captured key combinations
-      if (keyCombinations.length > 0) {
-        input.value = keyCombinations.join(" + "); // Join combinations with "+"
-      }
-    });
-
-    input.addEventListener("keydown", (event) => {
-      if (event.code === "Escape") {
-        // Reset on Esc key press (optional)
-        keyCombinations = [];
-        currentKeybindingInput.value = "";
-        return;
-      }
-
-      // Only prevent default behavior while actively capturing
-      event.stopPropagation(); // Prevent event from bubbling up
-      if (event.code === "Delete" || event.code === "Backspace") {
-        return;
-      }
-      if (keyCombinations.length < 3) {
-        event.preventDefault();
-        // Allow Delete and Backspace for normal deletion
-
-        if (currentKeybindingInput) {
-          keyCombinations.push(event.key); // Append to the array
-
-          console.log("Current key combinations:", keyCombinations.join(" + "));
-          currentKeybindingInput.value = keyCombinations.join(" + ");
-        }
-      }
+  // Update labels for width percentage
+  document.querySelectorAll('input[type="range"]').forEach((input) => {
+    input.addEventListener("input", () => {
+      const spanId = input.id + "-value";
+      document.getElementById(spanId).textContent = input.value + "%";
     });
   });
 });

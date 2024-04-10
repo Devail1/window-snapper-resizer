@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
-const { spawn } = require("child_process");
+const child = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const defaultSettings = require("./defaultSettings.json");
@@ -8,15 +8,16 @@ let mainWindow;
 let tray;
 let autohotkeyProcess;
 
-const autohotkeyPath = path.join(__dirname, "./assets/autohotkey/AutoHotkey32.exe");
-const scriptPath = path.join(__dirname, "./assets/scripts/center-window-resize.ahk");
-const settingsPath = path.join(app.getAppPath(), "settings.json");
+const resourcesPath = path.join(process.cwd(), "/resources/autohotkey");
+const autohotkeyPath = path.join(resourcesPath, "/AutoHotkey32.exe");
+const scriptPath = path.join(resourcesPath, "/center-window-resize.ahk");
+const settingsPath = path.join(app.getPath("userData"), "/settings.json");
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 680,
-    height: 620,
-    icon: "assets/icons/icon.png",
+    width: 500,
+    height: 680,
+    icon: "resources/icons/icon.png",
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
@@ -35,7 +36,7 @@ function createWindow() {
 }
 
 function createTray() {
-  tray = new Tray(path.join(__dirname, "assets/icons/icon.png"));
+  tray = new Tray(path.join(process.cwd(), "resources/icons/icon.png"));
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "Open",
@@ -55,23 +56,43 @@ function createTray() {
   tray.on("click", () => mainWindow.show());
 }
 
+function reloadChildProcess() {
+  if (autohotkeyProcess) {
+    try {
+      autohotkeyProcess.kill();
+    } catch (error) {
+      console.error("Error killing child process:", error);
+    }
+  }
+
+  try {
+    autohotkeyProcess = child.spawn(autohotkeyPath, [scriptPath]);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      console.error("Error spawning AutoHotkey:", error.message);
+      // Optionally display a user notification about missing AutoHotkey
+    } else {
+      console.error("Unexpected error spawning AutoHotkey:", error);
+    }
+  }
+}
+
 app.whenReady().then(() => {
   createWindow();
   createTray();
-
-  autohotkeyProcess = spawn(autohotkeyPath, [scriptPath]);
+  reloadChildProcess();
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-function resetSettings(event) {
-  fs.writeFileSync(settingsPath, JSON.stringify(defaultSettings));
-
+async function resetSettings(event) {
   event.sender.send("load-settings-reply", {
     settings: defaultSettings,
   });
+  fs.writeFileSync(settingsPath, JSON.stringify(defaultSettings));
+  reloadChildProcess(); // Reload after saving
 }
 
 ipcMain.on("reset-settings", (event) => {
@@ -93,6 +114,13 @@ ipcMain.on("load-settings", (event) => {
   }
 });
 
+const watcher = () => {
+  !fs.existsSync(settingsPath) && resetSettings();
+  return fs.watch(settingsPath, () => {
+    reloadChildProcess();
+  });
+};
+
 ipcMain.on("save-center-settings", async (event, data) => {
   try {
     const rawSettings = await fs.promises.readFile(settingsPath, "utf8");
@@ -101,7 +129,7 @@ ipcMain.on("save-center-settings", async (event, data) => {
     settings.centerWindow.keybinding = data.centerKeybind;
 
     await fs.promises.writeFile(settingsPath, JSON.stringify(settings)); // Indent for readability
-    await reloadChildProcess(); // Reload after saving
+    reloadChildProcess(); // Reload after saving
   } catch (err) {
     console.error("Error saving settings:", err.message, err.stack);
     // Optionally notify user of error (e.g., using a dialog)
@@ -120,7 +148,7 @@ ipcMain.on("save-resize-settings", async (event, data) => {
     };
 
     await fs.promises.writeFile(settingsPath, JSON.stringify(settings)); // Indent for readability
-    await reloadChildProcess(); // Reload after saving
+    reloadChildProcess(); // Reload after saving
   } catch (err) {
     console.error("Error saving settings:", err.message, err.stack); // Include stack trace
     console.error("Settings object:", settings);
@@ -147,24 +175,8 @@ app.on("window-all-closed", function () {
 });
 
 app.on("will-quit", () => {
-  watcher.close();
+  watcher().close();
   if (autohotkeyProcess) {
     autohotkeyProcess.kill();
   }
 });
-
-const watcher = fs.watch(settingsPath, () => {
-  reloadChildProcess();
-});
-
-function reloadChildProcess() {
-  if (autohotkeyProcess) {
-    try {
-      autohotkeyProcess.kill();
-    } catch (error) {
-      console.error("Error killing child process:", error);
-    }
-  }
-
-  autohotkeyProcess = spawn(autohotkeyPath, [scriptPath]);
-}

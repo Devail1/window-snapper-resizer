@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
+  <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Window Manager</title>
+  <title>Window Snapper & Resizer</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -18,7 +20,7 @@
           <button class="tablinks active" onclick="openTab(event, 'center')">Center Window</button>
           <button class="tablinks" onclick="openTab(event, 'resize')">Resize Window</button>
         </div>
-        <button id="resetButton" onclick="resetSettings()">Reset</button>
+        <button id="reset-button" onclick="resetSettings()">Reset</button>
       </div>
 
       <div id="center" class="tabcontent active">
@@ -30,7 +32,7 @@
               placeholder="Enter Shortcut (e.g., Win+Shift+C)">
             <span class="input-help">Press Esc to reset</span>
           </div>
-          <button class="saveButton" type="submit">Save</button>
+          <button class="save-button" type="submit">Save</button>
         </form>
       </div>
       <div id="resize" class="tabcontent">
@@ -45,26 +47,36 @@
           </div>
           <div>
             <h4>Small Size</h4>
-            <label for="smallWidthPercentage">Width Percentage:</label>
+            <label for="smallWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="smallWidthPercentage" min="1" max="100" value="50">
-            <label for="smallHeightPercentage">Height Percentage:</label>
+            <span id="smallWidthPercentage-value" class="dimensions-value" /></span>
+            <br>
+            <label for="smallHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="smallHeightPercentage" min="1" max="100" value="50">
+            <span id="smallHeightPercentage-value" class="dimensions-value" /></span>
           </div>
           <div>
             <h4>Medium Size</h4>
-            <label for="mediumWidthPercentage">Width Percentage:</label>
+            <label for="mediumWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="mediumWidthPercentage" min="1" max="100" value="75">
-            <label for="mediumHeightPercentage">Height Percentage:</label>
+            <span id="mediumWidthPercentage-value" class="dimensions-value" /></span>
+            <br>
+            <label for="mediumHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="mediumHeightPercentage" min="1" max="100" value="75">
+            <span id="mediumHeightPercentage-value" class="dimensions-value" /></span>
           </div>
           <div>
             <h4>Large Size</h4>
-            <label for="largeWidthPercentage">Width Percentage:</label>
+            <label for="largeWidthPercentage" class="dimensions-label">Width:</label>
             <input type="range" id="largeWidthPercentage" min="1" max="100" value="90">
-            <label for="largeHeightPercentage">Height Percentage:</label>
+            <span id="largeWidthPercentage-value" class="dimensions-value" /></span>
+            <br>
+            <label for="largeHeightPercentage" class="dimensions-label">Height:</label>
             <input type="range" id="largeHeightPercentage" min="1" max="100" value="90">
+            <span id="largeHeightPercentage-value" class="dimensions-value" /></span>
           </div>
-          <button class="saveButton" type="submit">Save</button>
+
+          <button class="save-button" type="submit">Save</button>
         </form>
       </div>
     </div>
@@ -72,6 +84,68 @@
 
 
   <script src="renderer.js"></script>
+  <script>
+    let currentKeybindingInput = null;
+    let keyCombinations = []; // Array to store key combinations
+
+    function bindKeybindingInput(input) {
+      currentKeybindingInput = input;
+      keyCombinations = []; // Reset key combinations on focus
+      hotkeys.setScope("keybinding-input");
+      hotkeys("esc", "keybinding-input", function (event, handler) {
+        input.value = "";
+        keyCombinations = [];
+        hotkeys.deleteScope("keybinding-input");
+        currentKeybindingInput = null;
+      });
+    }
+
+    function unbindKeybindingInput() {
+      if (currentKeybindingInput) {
+        hotkeys.deleteScope("keybinding-input");
+        currentKeybindingInput = null;
+      }
+    }
+    document.querySelectorAll(".keybinding-input").forEach((input) => {
+      input.addEventListener("focus", () => {
+        bindKeybindingInput(input);
+      });
+
+      input.addEventListener("blur", () => {
+        unbindKeybindingInput();
+        // Update input field value only if there are captured key combinations
+        if (keyCombinations.length > 0) {
+          input.value = keyCombinations.join(" + "); // Join combinations with "+"
+        }
+      });
+
+      input.addEventListener("keydown", (event) => {
+        if (event.code === "Escape") {
+          // Reset on Esc key press (optional)
+          keyCombinations = [];
+          currentKeybindingInput.value = "";
+          return;
+        }
+
+        // Only prevent default behavior while actively capturing
+        event.stopPropagation(); // Prevent event from bubbling up
+        if (event.code === "Delete" || event.code === "Backspace") {
+          return;
+        }
+        if (keyCombinations.length < 3) {
+          event.preventDefault();
+          // Allow Delete and Backspace for normal deletion
+
+          if (currentKeybindingInput) {
+            keyCombinations.push(event.key); // Append to the array
+
+            console.log("Current key combinations:", keyCombinations.join(" + "));
+            currentKeybindingInput.value = keyCombinations.join(" + ");
+          }
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "build": "electron-builder -w"
+    "build": "electron-builder"
   },
   "repository": "https://github.com/devail1/electron-quick-start",
   "keywords": [
@@ -18,19 +18,25 @@
   "author": "devail1",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^29.2.0",
-    "electron-builder": "^22.11.7"
-  },
-  "dependencies": {
-    "hotkeys-js": "^3.13.7"
+    "electron-builder": "^22.11.7",
+    "electron": "^29.2.0"
   },
   "build": {
     "productName": "Window Snapper & Resizer",
-    "icon": "assets/icons/icon.png",
+    "icon": "resources/icons/icon.png",
     "win": {
       "target": [
         "portable"
       ]
-    }
+    },
+    "files": [
+      "**/*",
+      "!**/node_modules/**",
+      "!**/.git/**",
+      "!package*.json"
+    ],
+    "extraFiles": [
+      "./resources/**/*"
+    ]
   }
 }
