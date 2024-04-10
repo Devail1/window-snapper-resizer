@@ -4,6 +4,7 @@
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 100px;
 }
 
 .innerContainer {
@@ -166,22 +167,30 @@ input[type="range"]::-webkit-slider-thumb {
 /* Style the summary to make it look like a button */
 summary {
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 8px;
   background-color: #f9f9f9;
-  font-size: x-small;
+  font-size: 11px;
   border-radius: 5px;
   text-align: center;
+}
+
+.read-more-content p {
+  margin: 4px 0;
+}
+
+.read-more-content ul {
+  padding-inline-start: 22px;
 }
 
 /* Style the content inside the details */
 .read-more-content {
   font-size: smaller;
-  padding: 1rem;
+  padding: 8px 4px;
   border-top: none;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 5px 5px;
   background-color: #f9f9f9;
   bottom: 0;
-  font-size: x-small;
+  font-size: 11px;
   width: 90%;
   margin: 0 auto;
   max-width: 600px;
@@ -197,7 +206,9 @@ footer {
 }
 
 footer p {
-  font-size: smaller;
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
 }
 
 footer a {

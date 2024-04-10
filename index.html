@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
   <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
   <meta charset="UTF-8">
@@ -22,7 +21,6 @@
         </div>
         <button id="reset-button" onclick="resetSettings()">Reset</button>
       </div>
-
       <div id="center" class="tabcontent active">
         <h3>Center Window</h3>
         <form onsubmit="saveCenterSettings(event)">
@@ -43,7 +41,6 @@
             <input type="text" required class="keybinding-input" id="resizeKeybind"
               placeholder="Enter Shortcut (e.g., F9)">
             <span class="input-help">Press Esc to reset</span>
-
           </div>
           <div>
             <h4>Small Size</h4>
@@ -75,7 +72,6 @@
             <input type="range" id="largeHeightPercentage" min="1" max="100" value="90">
             <span id="largeHeightPercentage-value" class="dimensions-value" /></span>
           </div>
-
           <button class="save-button" type="submit">Save</button>
         </form>
       </div>
@@ -84,31 +80,33 @@
       <details>
         <summary class="summary">Streamlined Window Management (Read more)</summary>
         <div class="read-more-content">
-          Power users and multitaskers, maximize focus with Window Snapper & Resizer.
-
+          <p>
+            Power users and multitaskers, maximize focus with Window Snapper & Resizer.
+          </p>
           <ul>
-            <li><strong>Customizable Keyboard Shortcuts:</strong> Control window actions efficiently for an
-              uninterrupted workflow.</li>
-            <li><strong>Predefined Window Layouts:</strong> Optimize your workspace with pre-defined dimensions, ideal
-              for developers, designers, and data analysts.</li>
+            <li>
+              <p>
+                <strong>Customizable Keyboard Shortcuts:</strong> Control window actions efficiently for an
+                uninterrupted workflow.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Predefined Window Layouts:</strong> Optimize your workspace with pre-defined dimensions, ideal
+                for developers, designers, and data analysts.
+              </p>
+            </li>
           </ul>
-
-          Free, open-source, and ad-free! (Details & updates on GitHub: <a
-            href="https://github.com/devail1/window-snapper-resizer">repository</a>)
-
-          Compatibility: .NET Framework 4.5, Windows 7, 8, 10
+          <p><strong>Free, open-source, and ad-free!</strong> (Details & updates on GitHub: <a target="_blank"
+              rel="noopener noreferrer" href="https://github.com/devail1/window-snapper-resizer">repository</a>)</p>
+          <p><strong>Compatibility:</strong> .NET Framework 4.5, Windows 7, 8, 10</p>
         </div>
       </details>
-
     </div>
-
   </div>
   <footer>
-    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/devail1/window-snapper-resizer">Window
-        Snapper Version 1.0.0</a></p>
+    <p><a target="_blank" rel="noopener noreferrer" href="https://liavedry.com">Created with ❤️</a>
   </footer>
-
-
   <script src="renderer.js"></script>
   <script>
     let currentKeybindingInput = null;
@@ -155,16 +153,17 @@
 
         // Only prevent default behavior while actively capturing
         event.stopPropagation(); // Prevent event from bubbling up
+
         if (event.code === "Delete" || event.code === "Backspace") {
           return;
         }
+
         if (keyCombinations.length < 3) {
           event.preventDefault();
           // Allow Delete and Backspace for normal deletion
 
           if (currentKeybindingInput) {
             keyCombinations.push(event.key); // Append to the array
-
             console.log("Current key combinations:", keyCombinations.join(" + "));
             currentKeybindingInput.value = keyCombinations.join(" + ");
           }
