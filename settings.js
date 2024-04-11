@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const { app } = require("electron");
 const defaultSettings = require("./defaultSettings.json"); // Assuming defaultSettings.json is in the parent directory
-
 const { reloadAutoHotkey } = require("./autohotkey");
 
 const settingsPath = path.join(app.getPath("userData"), "settings.json");
@@ -27,11 +26,24 @@ async function loadSettings(event) {
   }
 }
 
+async function getSettings() {
+  try {
+    if (!fs.existsSync(settingsPath)) {
+      await fs.promises.writeFile(settingsPath, JSON.stringify(defaultSettings, null, 2));
+    }
+    const settings = JSON.parse(await fs.promises.readFile(settingsPath, "utf8"));
+    return settings;
+  } catch (err) {
+    console.error("Error getting settings:", err.message, err.stack);
+    return null;
+  }
+}
+
 async function saveCenterSettings(event, data) {
   try {
     const rawSettings = await fs.promises.readFile(settingsPath, "utf8");
     const settings = JSON.parse(rawSettings);
-    settings.centerWindow.keybinding = data.centerKeybind;
+    settings.centerWindow.keybinding = data.centerKeybind; // Update keybinding here
     await fs.promises.writeFile(settingsPath, JSON.stringify(settings, null, 2));
     reloadAutoHotkey();
   } catch (err) {
@@ -56,10 +68,17 @@ async function saveResizeSettings(event, data) {
   settingsWatcher = fs.watch(settingsPath, () => reloadAutoHotkey());
 }
 
+function closeWatcher() {
+  if (settingsWatcher) {
+    settingsWatcher.close();
+  }
+}
+
 module.exports = {
   resetSettings,
   loadSettings,
+  getSettings,
   saveCenterSettings,
   saveResizeSettings,
-  closeWatcher: () => settingsWatcher.close(), // Function to close watcher
+  closeWatcher,
 };

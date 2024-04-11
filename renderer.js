@@ -34,21 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function openTab(event, tabName) {
-  const tabcontent = document.getElementsByClassName("tabcontent");
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  const tablinks = document.getElementsByClassName("tablinks");
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].classList.remove("active");
-  }
-
-  document.getElementById(tabName).style.display = "block";
-  event?.currentTarget.classList.add("active");
-}
-
 function saveCenterSettings(event) {
   event.preventDefault();
   const centerKeybind = document.getElementById("centerKeybind").value;

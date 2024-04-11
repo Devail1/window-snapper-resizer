@@ -1,8 +1,11 @@
-const { BrowserWindow, Menu, app } = require("electron");
+const { BrowserWindow, Menu, app, Notification } = require("electron");
 const path = require("path");
+const { getSettings } = require("./settings");
+
+let mainWindow; // Global variable to store the mainWindow reference
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 580,
     height: 760,
     icon: path.join(__dirname, "resources", "icons", "icon.png"),
@@ -26,7 +29,26 @@ function createWindow() {
   return mainWindow;
 }
 
-function createTrayMenu(tray, mainWindow) {
+async function showNotification() {
+  const settings = await getSettings();
+  if (settings) {
+    const { centerWindow, resizeWindow } = settings;
+
+    const notification = new Notification({
+      title: "Window Snapper",
+      body: `Press ${centerWindow.keybinding} to center the window. \nPress ${resizeWindow.keybinding} to resize the window.`,
+      silent: true,
+    });
+
+    notification.on("click", () => {
+      mainWindow.show();
+    });
+
+    notification.show();
+  }
+}
+
+function createTrayMenu(tray) {
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "Open",
@@ -40,6 +62,8 @@ function createTrayMenu(tray, mainWindow) {
   tray.setToolTip("Window Snapper");
   tray.setContextMenu(contextMenu);
   tray.on("click", () => mainWindow.show());
+
+  showNotification();
 }
 
 module.exports = {
