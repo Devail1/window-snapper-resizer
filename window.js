@@ -1,6 +1,9 @@
+const { nativeTheme } = require("electron");
+
 const { BrowserWindow, Menu, app, Notification } = require("electron");
 const path = require("path");
 const { getSettings } = require("./settings");
+const { getIconPath } = require("./utils");
 
 let mainWindow; // Global variable to store the mainWindow reference
 
@@ -53,12 +56,20 @@ function createTrayMenu(tray) {
     {
       label: "Open",
       click: () => mainWindow.show(),
+      icon: getIconPath("open"),
     },
     {
       label: "Quit",
       click: () => app.quit(),
+      icon: getIconPath("quit"),
     },
   ]);
+  // Apply custom CSS to the context menu
+  contextMenu.items.forEach((item) => {
+    item.enabled = true; // Enable the menu item
+    item.visible = true; // Make the menu item visible
+    item.icon = "icon-quit"; // Set the icon class for the menu item
+  });
   tray.setToolTip("Window Snapper");
   tray.setContextMenu(contextMenu);
   tray.on("click", () => mainWindow.show());

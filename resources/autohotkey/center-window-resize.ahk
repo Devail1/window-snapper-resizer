@@ -1,4 +1,5 @@
-﻿#NoTrayIcon
+﻿#SingleInstance
+#NoTrayIcon
 #Include "%A_ScriptDir%\JXON.ahk"  ; Include the JSON library
 
 Join(sep, params*) {
@@ -61,8 +62,6 @@ CenterWindow(WinTitle) {
     NewY := mon.WATop + (mon.WAHeight - Height - TaskbarHeightOffset) / 2  ; Calculate centered Y position on current monitor
 
     WinMove(NewX, NewY, Width, Height, hwnd)  ; Move window to the center
-  } else {
-    MsgBox("Window not found.")
   }
 }
 
@@ -74,8 +73,6 @@ ResizeWindow(WinTitle) {
 
   if (hwnd) {
     CenterAndResizeWindow("A", ToggleSizes[size]["width"], ToggleSizes[size]["height"])
-  } else {
-    MsgBox("Active window not found.")
   }
 }
 
@@ -98,8 +95,6 @@ CenterAndResizeWindow(WinTitle, WidthPercentage, HeightPercentage) {
     NewY := mon.WATop + (mon.WAHeight - NewHeight - TaskbarHeightOffset) / 2 ; Calculate centered Y position on current monitor
 
     WinMove(NewX, NewY, NewWidth, NewHeight, hwnd)  ; Move and resize window
-  } else {
-    MsgBox("Window with title `"" WinTitle "`" not found.")
   }
 }
 
@@ -128,5 +123,5 @@ GetNearestMonitorInfo(winTitle) {
       , Primary: NumGet(MONITORINFOEX, 36, "uint")
     }
   }
-  throw Error("GetMonitorInfo: " A_LastError, -1)
+  return {} ; Return an empty object if the monitor info cannot be retrieved
 }
