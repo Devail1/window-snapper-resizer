@@ -1,16 +1,24 @@
-const { app, BrowserWindow, Tray, ipcMain } = require("electron");
+// main.js
+const { app, BrowserWindow, Tray, ipcMain, Notification } = require("electron");
 const path = require("path");
-const settings = require("./settings"); // Import settings module
-const autohotkey = require("./autohotkey"); // Import autohotkey module
-const window = require("./window"); // Import window module
+const settings = require("./settings");
+const autohotkey = require("./autohotkey");
+const { createWindow, createTrayMenu } = require("./window");
 
 app.whenReady().then(() => {
-  window.createWindow();
+  const mainWindow = createWindow();
   const tray = new Tray(path.join(__dirname, "resources", "icons", "icon.png"));
-  window.createTrayMenu(tray); // Pass tray to window module
+  createTrayMenu(tray, mainWindow);
+
+  // Optionally show a notification on startup (replace with your notification logic)
+  const notification = new Notification({
+    title: "Window Snapper",
+    body: "App is running in the tray.",
+  });
+  notification.show();
 
   app.on("activate", function () {
-    if (BrowserWindow.getAllWindows().length === 0) window.createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 
   app.on("will-quit", () => {

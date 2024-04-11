@@ -1,4 +1,4 @@
-const { BrowserWindow, Tray, Menu, app } = require("electron");
+const { BrowserWindow, Menu, app } = require("electron");
 const path = require("path");
 
 function createWindow() {
@@ -7,6 +7,7 @@ function createWindow() {
     height: 760,
     icon: path.join(__dirname, "resources", "icons", "icon.png"),
     autoHideMenuBar: true,
+    show: false, // Prevent initial window creation
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -25,7 +26,7 @@ function createWindow() {
   return mainWindow;
 }
 
-function createTrayMenu(tray) {
+function createTrayMenu(tray, mainWindow) {
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "Open",
