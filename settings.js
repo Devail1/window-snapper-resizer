@@ -16,9 +16,10 @@ async function resetSettings(event) {
 
 async function loadSettings(event) {
   try {
-    const settings = (await fs.existsSync(settingsPath))
-      ? JSON.parse(await fs.promises.readFile(settingsPath, "utf8"))
-      : defaultSettings;
+    if (!fs.existsSync(settingsPath)) {
+      await fs.promises.writeFile(settingsPath, JSON.stringify(defaultSettings, null, 2));
+    }
+    const settings = JSON.parse(await fs.promises.readFile(settingsPath, "utf8"));
     event.sender.send("load-settings-reply", { settings });
     reloadAutoHotkey();
   } catch (err) {
