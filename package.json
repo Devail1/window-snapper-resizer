@@ -23,7 +23,7 @@
   },
   "build": {
     "productName": "Window Snapper & Resizer",
-    "icon": "resources/icons/icon.png",
+    "icon": "resources/icons/logo.png",
     "win": {
       "target": [
         "portable"

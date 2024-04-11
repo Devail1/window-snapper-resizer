@@ -11,7 +11,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 580,
     height: 760,
-    icon: path.join(__dirname, "resources", "icons", "icon.png"),
+    icon: getIconPath("logo"),
     autoHideMenuBar: true,
     show: false, // Prevent initial window creation
     webPreferences: {
