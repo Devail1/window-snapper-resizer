@@ -10,11 +10,11 @@ Window Snapper & Resizer is a utility application that allows you to easily cent
 
 ## Inspiration
 
-This project is heavily inspired by the window centering helper freeware by [Kamil Szymborski](https://www.szymborski.net/software/). We aim to provide a modern, user-friendly alternative with additional features and customization options.
+This project is heavily inspired by the window centering helper freeware by [Kamil Szymborski](https://kamilszymborski.github.io/). Window Snapper & Resizer offers a modern approach to window management with additional features and extensive customization capabilities.
 
 ## Installation
 
-To use Window Snapper & Resizer, [download](portable/Window%20Snapper%20&%20Resizer%201.0.0.exe?raw=1+) the latest release from the [GitHub repository](https://github.com/devail1/window-snapper-resizer) and run the executable file. Follow the on-screen instructions to complete the installation process.
+To use Window Snapper & Resizer, [download](portable/Window%20Snapper%20&%20Resizer%201.0.0.exe?raw=1+) the latest release from the [GitHub repository](https://github.com/devail1/window-snapper-resizer) and run the executable file.
 
 ## Usage
 
