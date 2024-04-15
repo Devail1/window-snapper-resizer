@@ -1,7 +1,7 @@
 {
   "name": "window-snapper-resizer",
   "version": "1.0.0",
-  "description": "Window Snapper & Resizer",
+  "description": "Window Snapper Resizer",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -22,7 +22,7 @@
     "electron": "^29.2.0"
   },
   "build": {
-    "productName": "Window Snapper & Resizer",
+    "productName": "Window Snapper Resizer",
     "icon": "resources/icons/logo.png",
     "win": {
       "target": [
