@@ -14,7 +14,7 @@ This project is heavily inspired by the window centering helper freeware by [Kam
 
 ## Installation
 
-To use Window Snapper & Resizer, [download](portable/Window%20Snapper%20&%20Resizer%201.0.0.exe?raw=1+) the latest release from the [GitHub repository](https://github.com/devail1/window-snapper-resizer) and run the executable file.
+To use Window Snapper & Resizer, [download](portable/Window%20Snapper%20Resizer%201.0.0.exe?raw=1+) the latest release from the [GitHub repository](https://github.com/devail1/window-snapper-resizer) and run the executable file.
 
 ## Usage
 
