@@ -43,8 +43,6 @@ resizeWindowObj := json["resizeWindow"]  ; Access "resizeWindow" as an object
 ResizeWindowKey := ConvertHotkeysJsToHotHotkeys(resizeWindowObj["keybinding"])  ; Access "keybinding" from the object
 ToggleSizes := resizeWindowObj["windowSizePercentages"]  ; Access the entire array
 
-; Define other variables
-TaskbarHeightOffset := 30
 
 ; Define hotkeys
 Hotkey(CenterWindowKey, CenterWindow, "On")
@@ -59,9 +57,11 @@ CenterWindow(WinTitle) {
     WinGetPos(&WinX, &WinY, &Width, &Height, hwnd)  ; Get current window position and size
 
     NewX := mon.WALeft + (mon.WAWidth - Width) / 2  ; Calculate centered X position on current monitor
-    NewY := mon.WATop + (mon.WAHeight - Height - TaskbarHeightOffset) / 2  ; Calculate centered Y position on current monitor
+    NewY := mon.WATop + (mon.WAHeight - Height) / 2  ; Calculate centered Y position on current monitor
 
     WinMove(NewX, NewY, Width, Height, hwnd)  ; Move window to the center
+  } else {
+    MsgBox("Window not found.")
   }
 }
 
@@ -73,6 +73,8 @@ ResizeWindow(WinTitle) {
 
   if (hwnd) {
     CenterAndResizeWindow("A", ToggleSizes[size]["width"], ToggleSizes[size]["height"])
+  } else {
+    MsgBox("Active window not found.")
   }
 }
 
@@ -92,9 +94,11 @@ CenterAndResizeWindow(WinTitle, WidthPercentage, HeightPercentage) {
     WinGetPos(&WinX, &WinY, &Width, &Height, hwnd)  ; Get current window position and size
 
     NewX := mon.WALeft + (mon.WAWidth - NewWidth) / 2 ; Calculate centered X position on current monitor
-    NewY := mon.WATop + (mon.WAHeight - NewHeight - TaskbarHeightOffset) / 2 ; Calculate centered Y position on current monitor
+    NewY := mon.WATop + (mon.WAHeight - NewHeight) / 2 ; Calculate centered Y position on current monitor
 
     WinMove(NewX, NewY, NewWidth, NewHeight, hwnd)  ; Move and resize window
+  } else {
+    MsgBox("Window with title `"" WinTitle "`" not found.")
   }
 }
 
@@ -123,5 +127,5 @@ GetNearestMonitorInfo(winTitle) {
       , Primary: NumGet(MONITORINFOEX, 36, "uint")
     }
   }
-  return {} ; Return an empty object if the monitor info cannot be retrieved
+  throw Error("GetMonitorInfo: " A_LastError, -1)
 }
