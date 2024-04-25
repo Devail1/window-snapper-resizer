@@ -3,6 +3,7 @@
 #Include "%A_ScriptDir%\JXON.ahk"  ; Include the JSON library
 
 Join(sep, params*) {
+  str := ''
   for index, param in params
     str .= sep . param
   return SubStr(str, StrLen(sep) + 1)
@@ -44,9 +45,12 @@ ResizeWindowKey := ConvertHotkeysJsToHotHotkeys(resizeWindowObj["keybinding"])  
 ToggleSizes := resizeWindowObj["windowSizePercentages"]  ; Access the entire array
 
 
-; Define hotkeys
-Hotkey(CenterWindowKey, CenterWindow, "On")
-Hotkey(ResizeWindowKey, ResizeWindow, "On")
+; Define hotkeys if keybinding exists
+if (CenterWindowKey != "")
+  Hotkey(CenterWindowKey, CenterWindow, "On")
+if (ResizeWindowKey != "")
+  Hotkey(ResizeWindowKey, ResizeWindow, "On")
+
 
 CenterWindow(WinTitle) {
   hwnd := WinExist("A")  ; Check if window exists
